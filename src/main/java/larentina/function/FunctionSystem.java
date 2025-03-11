@@ -5,26 +5,28 @@ import larentina.logarithmic.Log10;
 import larentina.logarithmic.Log2;
 import larentina.logarithmic.Log5;
 import larentina.trigonometric.*;
+import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class FunctionSystem {
+@RequiredArgsConstructor
+public class FunctionSystem implements CalculateWithPrecision {
 
-    private final TrigFunctions trigFunctions = new TrigFunctions();
-    private final LogFunctions logFunctions = new LogFunctions();
+    private final Cos cos;
+    private final Sin sin;
+    private final Tan tan;
+    private final Sec sec;
+    private final Csc csc;
 
-    public BigDecimal solveSystem(BigDecimal a, int precision) {
-        Cos cos = trigFunctions.cos();
-        Sin sin = trigFunctions.sin();
-        Tan tan = trigFunctions.tan();
-        Csc csc = trigFunctions.csc();
-        Sec sec = trigFunctions.sec();
+    private final Log10 log10;
+    private final Log2 log2;
+    private final Log5 log5;
+    private final Ln ln;
 
-        Log2 log2 = logFunctions.log2();
-        Log5 log5 = logFunctions.log5();
-        Log10 log10 = logFunctions.log10();
-        Ln ln = logFunctions.ln();
+
+    @Override
+    public BigDecimal calculate(BigDecimal a, int precision) {
 
         BigDecimal result;
         if (a.compareTo(BigDecimal.ZERO) >= 0) {
