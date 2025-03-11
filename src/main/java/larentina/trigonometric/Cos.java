@@ -27,7 +27,7 @@ public class Cos implements CalculateWithPrecision {
         return result.round(new MathContext(precision, RoundingMode.HALF_UP));
     }
 
-    private static BigDecimal factorial(int num) {
+    private BigDecimal factorial(int num) {
         if (num == 0) {
             return BigDecimal.ONE;
         }

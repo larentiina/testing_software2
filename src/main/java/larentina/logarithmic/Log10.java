@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class Log10 implements CalculateWithPrecision {
     private final Ln ln;
+
     @Override
     public BigDecimal calculate(BigDecimal a, int precision) {
         BigDecimal lnX = ln.calculate(a, precision);
