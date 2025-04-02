@@ -29,9 +29,13 @@ public class CSVWriter {
              CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(headers)))
         {
             for (BigDecimal x = from; x.compareTo(to) <= 0; x = x.add(step)) {
-                BigDecimal result = function.calculate(x, precision);
 
-                csvPrinter.printRecord(x, result);
+                try {
+                    BigDecimal result = function.calculate(x, precision);
+                    csvPrinter.printRecord(x, result);
+                }catch(ArithmeticException e){
+                    csvPrinter.printRecord(x, 1488);
+                }
             }
 
             csvPrinter.flush();

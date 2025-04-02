@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-public class Ln implements CalculateWithPrecision {
+public class Ln  implements CalculateWithPrecision {
     @Override
     public BigDecimal calculate(BigDecimal x, int precision) {
         if (x.compareTo(BigDecimal.ZERO) <= 0) {

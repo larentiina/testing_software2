@@ -9,7 +9,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 @RequiredArgsConstructor
-public class Sin implements CalculateWithPrecision {
+public class Sin  implements CalculateWithPrecision {
     private final Cos cos;
 
     @Override

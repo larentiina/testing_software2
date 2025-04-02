@@ -58,25 +58,13 @@ public class FunctionTestLogarithmic {
 
 
         when(lnMock.calculate(Mockito.any(), Mockito.eq(15)))
-                .thenAnswer(invocation -> {
-                    BigDecimal arg = invocation.getArgument(0);
-                    return BigDecimal.valueOf(Math.log(arg.doubleValue()));
-                });
+                .thenAnswer(invocation -> getLn(invocation.getArgument(0)));
         when(log10Mock.calculate(Mockito.any(), Mockito.eq(15)))
-                .thenAnswer(invocation -> {
-                    BigDecimal arg = invocation.getArgument(0);
-                    return BigDecimal.valueOf(Math.log10(arg.doubleValue()));
-                });
+                .thenAnswer(invocation -> getLog10(invocation.getArgument(0)));
         when(log2Mock.calculate(Mockito.any(), Mockito.eq(15)))
-                .thenAnswer(invocation -> {
-                    BigDecimal arg = invocation.getArgument(0);
-                    return BigDecimal.valueOf(Math.log(arg.doubleValue())/Math.log(2));
-                });
+                .thenAnswer(invocation -> getLog2(invocation.getArgument(0)));
         when(log5Mock.calculate(Mockito.any(), Mockito.eq(15)))
-                .thenAnswer(invocation -> {
-                    BigDecimal arg = invocation.getArgument(0);
-                    return BigDecimal.valueOf(Math.log(arg.doubleValue())/Math.log(5));
-                });
+                .thenAnswer(invocation -> getLog5(invocation.getArgument(0)));
 
         FunctionSystem functionSystem = new FunctionSystem(cos, sin, tan, sec, csc, log10Mock, log2Mock, log5Mock, lnMock);
         BigDecimal result = functionSystem.calculate(number, 15);
@@ -118,7 +106,7 @@ public class FunctionTestLogarithmic {
                     BigDecimal arg = invocation.getArgument(0);
                     return BigDecimal.valueOf(Math.log(arg.doubleValue())/Math.log(5));
                 });
-
+//
 
         FunctionSystem functionSystem = new FunctionSystem(cos, sin, tan, sec, csc, log10Mock, log2Mock, log5Mock, lnMock);
         assertThrows(ArithmeticException.class, () -> functionSystem.calculate(angle, 15));
@@ -137,12 +125,24 @@ public class FunctionTestLogarithmic {
         Log2 log2 = new Log2(lnMock);
         Log5 log5 = new Log5(lnMock);
 
+        when(lnMock.calculate(BigDecimal.valueOf(10), 15))
+                .thenReturn(BigDecimal.valueOf(2.3025850929));
 
-        when(lnMock.calculate(Mockito.any(), Mockito.eq(15)))
-                .thenAnswer(invocation -> {
-                    BigDecimal arg = invocation.getArgument(0);
-                    return BigDecimal.valueOf(Math.log(arg.doubleValue()));
-                });
+        when(lnMock.calculate(BigDecimal.valueOf(5), 15))
+                .thenReturn(BigDecimal.valueOf(1.6094379124));
+
+        when(lnMock.calculate(BigDecimal.valueOf(2), 15))
+                .thenReturn(BigDecimal.valueOf(0.6931471806));
+
+
+        when(lnMock.calculate(BigDecimal.valueOf(0.2), 15))
+                .thenReturn(BigDecimal.valueOf(-1.6094379124));
+
+        when(lnMock.calculate(BigDecimal.valueOf(0.76627), 15))
+                .thenReturn(BigDecimal.valueOf(-0.2658403931));
+
+
+
 
         FunctionSystem functionSystem = new FunctionSystem(cos, sin, tan, sec, csc, log10, log2, log5, lnMock);
         BigDecimal result = functionSystem.calculate(number, 15);
@@ -210,5 +210,34 @@ public class FunctionTestLogarithmic {
 
         FunctionSystem functionSystem = new FunctionSystem(cos, sin, tan, sec, csc, log10, log2, log5, ln);
         assertThrows(ArithmeticException.class, () -> functionSystem.calculate(angle, 15));
+    }
+
+    public static BigDecimal getLn(BigDecimal x) {
+        System.out.println(x);
+        if (x.compareTo(BigDecimal.valueOf(0.2)) == 0) return BigDecimal.valueOf(-1.6094379124);
+        if (x.compareTo(BigDecimal.valueOf(0.76627)) == 0) return BigDecimal.valueOf(-0.2658403931);
+        if (x.compareTo(BigDecimal.valueOf(2)) == 0) return BigDecimal.valueOf(0.6931471806);
+        throw new IllegalArgumentException("Значение не предусмотрено");
+    }
+
+    public static BigDecimal getLog10(BigDecimal x) {
+        if (x.compareTo(BigDecimal.valueOf(0.2)) == 0) return BigDecimal.valueOf(-0.6989700043);
+        if (x.compareTo(BigDecimal.valueOf(0.76627)) == 0) return BigDecimal.valueOf(-0.1156942077);
+        if (x.compareTo(BigDecimal.valueOf(2)) == 0) return BigDecimal.valueOf(0.3010299957);
+        throw new IllegalArgumentException("Значение не предусмотрено");
+    }
+
+    public static BigDecimal getLog2(BigDecimal x) {
+        if (x.compareTo(BigDecimal.valueOf(0.2)) == 0) return BigDecimal.valueOf(-2.321928095);
+        if (x.compareTo(BigDecimal.valueOf(0.76627)) == 0) return BigDecimal.valueOf(-0.3834101395);
+        if (x.compareTo(BigDecimal.valueOf(2)) == 0) return BigDecimal.valueOf(1.0);
+        throw new IllegalArgumentException("Значение не предусмотрено");
+    }
+
+    public static BigDecimal getLog5(BigDecimal x) {
+        if (x.compareTo(BigDecimal.valueOf(0.2)) == 0) return BigDecimal.valueOf(-1.0);
+        if (x.compareTo(BigDecimal.valueOf(0.76627)) == 0) return BigDecimal.valueOf(-0.1654333301);
+        if (x.compareTo(BigDecimal.valueOf(2)) == 0) return BigDecimal.valueOf(0.4306765581);
+        throw new IllegalArgumentException("Значение не предусмотрено");
     }
 }

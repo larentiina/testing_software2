@@ -4,38 +4,119 @@ import larentina.function.FunctionSystem;
 
 import larentina.logarithmic.Ln;
 import larentina.logarithmic.Log10;
-import larentina.trigonometric.Cos;
-import larentina.trigonometric.Sin;
+import larentina.logarithmic.Log2;
+import larentina.logarithmic.Log5;
+import larentina.trigonometric.*;
 import larentina.utils.CSVWriter;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.stream.Stream;
 
-/**
- * Hello world!
- *
- */
-public class App 
+public class App
 {
-    public static void main( String[] args )
-    {
-//        new FunctionSystem(new TrigFunctions(),new LogFunctions()).calculate(BigDecimal.valueOf(10),15);
-////        System.out.println(new Ln().calculate(BigDecimal.valueOf(1),15));
+    public static void main( String[] args ) throws IOException {
+
+        CSVWriter csvWriter = new CSVWriter();
+        Cos cos = new Cos();
+
+        Sin sin = new Sin(cos);
+        Tan tan = new Tan(sin, cos);
+        Sec sec = new Sec(cos);
+        Csc csc = new Csc(sin);
+
+        Ln ln = new Ln();
+        Log10 log10 = new Log10(ln);
+        Log2 log2 = new Log2(ln);
+        Log5 log5 = new Log5(ln);
+
+
+        FunctionSystem system = new FunctionSystem(cos, sin, tan, sec, csc, log10, log2, log5, ln);
 //
-//        CSVWriter csvWriter = new CSVWriter();
-//        Sin sinFunction = new Sin(new Cos());
 //
-//        try {
 //            csvWriter.write(
-//                    new FunctionSystem(new TrigFunctions(),new LogFunctions()),
-//                    "SinResults.csv", // Имя файла в текущей директории
-//                    BigDecimal.valueOf(-1.5), // from
-//                    BigDecimal.valueOf(-1), // to
-//                    BigDecimal.valueOf(0.1), // step
-//                    5 // precision
+//                   sin,
+//                    "Sin.csv",
+//                    BigDecimal.valueOf(-2*Math.PI),
+//                    BigDecimal.valueOf(2*Math.PI),
+//                    BigDecimal.valueOf(0.01),
+//                    5
 //            );
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+//            csvWriter.write(
+//                    cos,
+//                    "Cos.csv",
+//                    BigDecimal.valueOf(-2*Math.PI),
+//                    BigDecimal.valueOf(2*Math.PI),
+//                    BigDecimal.valueOf(0.1),
+//                    5
+//            );
+//            csvWriter.write(
+//                    tan,
+//                    "Tan.csv",
+//                    BigDecimal.valueOf(-2*Math.PI),
+//                    BigDecimal.valueOf(0),
+//                    BigDecimal.valueOf(0.1),
+//                    5
+//            );
+//            csvWriter.write(
+//                    sec,
+//                    "Sec.csv",
+//                    BigDecimal.valueOf(-2*Math.PI),
+//                    BigDecimal.valueOf(Math.PI),
+//                    BigDecimal.valueOf(0.01),
+//                    5
+//            );
+//            csvWriter.write(
+//                    csc,
+//                    "Csc.csv",
+//                    BigDecimal.valueOf(-2*Math.PI),
+//                    BigDecimal.valueOf(Math.PI),
+//                    BigDecimal.valueOf(0.01),
+//                    5
+//            );
+//
+//            csvWriter.write(
+//                    ln,
+//                    "Ln.csv",
+//                    BigDecimal.valueOf(0),
+//                    BigDecimal.valueOf(5),
+//                    BigDecimal.valueOf(0.1),
+//                    5
+//            );
+            csvWriter.write(
+                    log2,
+                    "log2.csv",
+                    BigDecimal.valueOf(0),
+                    BigDecimal.valueOf(5),
+                    BigDecimal.valueOf(0.1),
+                    5
+            );
+            csvWriter.write(
+                    log5,
+                    "log5.csv",
+                    BigDecimal.valueOf(0),
+                    BigDecimal.valueOf(5),
+                    BigDecimal.valueOf(0.1),
+                    5
+            );
+            csvWriter.write(
+                    log10,
+                    "log10.csv",
+                    BigDecimal.valueOf(0),
+                    BigDecimal.valueOf(5),
+                    BigDecimal.valueOf(0.1),
+                    5
+            );
+
+//            csvWriter.write(
+//                    system,
+//                    "Function.csv",
+//                    BigDecimal.valueOf(-3*Math.PI),
+//                    BigDecimal.valueOf(2),
+//                    BigDecimal.valueOf(0.01),
+//                    5
+//            );
+
+
     }
-}
+    }
